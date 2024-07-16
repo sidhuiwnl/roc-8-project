@@ -26,7 +26,7 @@ export default function Header() {
             Trending
           </Link>
         </nav>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-4">
           <div className="hidden md:block text-sm text-muted-foreground">
             <Link href="#" className="hover:underline" prefetch={false}>
               Help
@@ -38,15 +38,17 @@ export default function Header() {
             <span className="mx-2">|</span>
             <span>Hi, John</span>
           </div>
-          
+          <div>
           <Button variant="ghost" size="icon">
             <ShoppingCartIcon className="h-5 w-5" />
             <span className="sr-only">Cart</span>
           </Button>
-          <Button variant="ghost" size="icon" className="md:hidden" >
+          <Button variant="ghost" size="icon" >
             <SearchIcon className="h-5 w-5" />
             <span className="sr-only">Search</span>
           </Button>
+          </div>
+          
         </div>
       </div>
     </header>
