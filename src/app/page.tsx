@@ -1,21 +1,10 @@
 
-
 import { api, HydrateClient } from "~/trpc/server";
 
-
-
 export default async function Home() {
- 
-  
-
-  
-
-  return (
+   return (
     <HydrateClient>
-      
-          <h1>hllooo</h1>
-          
-        
+      <h1>Update will be soon</h1>
     </HydrateClient>
   );
 }
