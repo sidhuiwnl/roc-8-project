@@ -14,7 +14,7 @@ datasource db {
 
 model Signup{
     id          String   @id @default(uuid())
-    name        String   @db.VarChar(255)
+    name        String   @db.VarChar(255) @unique
     email       String   @unique
     password    String 
     createdAt   DateTime @default(now())

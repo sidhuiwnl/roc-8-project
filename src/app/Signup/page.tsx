@@ -27,6 +27,7 @@ export default function Signup() {
 
         onError : (error) =>{
             throw new Error(error.message)
+            
         }
     })
 
