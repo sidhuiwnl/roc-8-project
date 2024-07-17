@@ -1,11 +1,45 @@
+'use client'
 
 import { Label } from "~/components/ui/label"
 import { Input } from "~/components/ui/input"
 import { Button } from "~/components/ui/button"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { api } from "~/trpc/react"
+import { useState } from "react"
 
 
 export default function Signin(){
+    const router = useRouter();
+    const[email,setEmail] = useState("");
+    const[password,setPassword] = useState("");
+    const[showPassword,setShowPassword] = useState(false);
+
+    const loginedName = api.signup.getUser.useQuery({
+        email,password
+    },{
+        enabled : false,
+        retry : false
+    })
+
+    async function handleLogin(e : React.FormEvent){
+       e.preventDefault();
+       await loginedName.refetch().then((result) =>{
+        if(result.data){
+            router.push("/")
+        }else if(result.error){
+            setPassword("");
+            setEmail("");   
+            alert(result.error?.message);
+            
+        }
+       })
+       
+    }
+    
+
+
+
     return(
         <div className="flex h-screen w-full items-center justify-center bg-background">
         <div className="mx-4 w-full max-w-md space-y-12 rounded-xl bg-card p-6 border sm:px-8">
@@ -14,29 +48,29 @@ export default function Signin(){
                 <h3 className="text-xl font-semibold">Welcome back to ECOMMERCE</h3>
                 <p className="text-black font-medium">The next gen business marketplace</p>
             </div>
-            <form className="grid gap-7">
+            <form className="grid gap-7" onSubmit={handleLogin}>
                 
                 <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="example@email.com" required />
+                    <Input id="email" type="email" value={email} placeholder="example@email.com" required onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="password">Password</Label>
                         <div className="relative">
-                        <Input id="password" type="password" required />
-                        <button type="button" className="underline absolute inset-y-0 right-0 pr-3 flex items-center">Show</button>
+                        <Input id="password" type={showPassword ? "text" : "password"} value={password}  onChange={(e) => setPassword(e.target.value)} required />
+                        <button type="button" className="underline absolute inset-y-0 right-0 pr-3 flex items-center" onClick={() => setShowPassword(!showPassword)} >{showPassword ? "Hide" : "Show"}</button>
                         </div>
                         
                        
                     </div>
-                <Button type="submit" className="mx-auto w-full">
-                    LOGIN
+                <Button type="submit" className="mx-auto w-full" disabled={loginedName.isFetching}>
+                    {loginedName.isFetching ? "Logging in" : "Login"}
                 </Button>
             </form>
             <hr></hr>
             <div className="text-center text-sm text-muted-foreground">
             Don’t have an Account?{" "}
-                <Link href="#" className="font-medium underline underline-offset-4" prefetch={false}>
+                <Link href="/Signup" className="font-medium underline underline-offset-4" prefetch={false}>
                     SIGN UP
                 </Link>
             </div>

@@ -3,6 +3,7 @@ import { z } from "zod";
 import 'server-only'
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { db } from "~/server/db";
 
 
 export const signUpRouter = createTRPCRouter({
@@ -17,5 +18,23 @@ export const signUpRouter = createTRPCRouter({
 
         }
         })
+    }),
+
+    getUser : publicProcedure
+    .input(z.object({email : z.string(),password : z.string()}))
+    .query(async(opts) =>{
+        const {input} = opts;
+        const user = await db.signup.findUnique({
+            where : {
+                email : input.email,
+                password : input.password
+            },
+            select : {
+                name : true,
+                
+            }
+        })
+
+        return user
     })
 })

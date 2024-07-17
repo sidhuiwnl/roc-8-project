@@ -14,7 +14,7 @@ export default function Signup() {
     const [name,setName] = useState("");
     const[email,setEmail] = useState("");
     const[password,setPassword] = useState("");
-
+    const[showPassword,setShowPassword] = useState(false)
 
     const signupForm = api.signup.create.useMutation({
         onSuccess : async() =>{
@@ -32,17 +32,6 @@ export default function Signup() {
     })
 
 
-
-    function passwordChange(){
-        const passwordInput = document.getElementById('password');
-        if(passwordInput?.getAttribute('type') === "password"){
-            passwordInput.setAttribute('type','text')
-        }else{
-            passwordInput?.setAttribute('type','password')
-        }
-
-
-    }
 
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -70,8 +59,8 @@ export default function Signup() {
                     <div className="grid gap-2">
                     <Label htmlFor="password">Password</Label>
                         <div className="relative">
-                        <Input id="password" type="password" required  value={password} onChange={(e) => setPassword(e.target.value)}/>
-                        <button type="button" className="underline absolute inset-y-0 right-0 pr-3 flex items-center" onClick={passwordChange}>Show</button>
+                        <Input id="password" type={showPassword ? "text" : "password"} required  value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <button type="button" className="underline absolute inset-y-0 right-0 pr-3 flex items-center" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</button>
                         </div>
                         
                        
@@ -87,7 +76,7 @@ export default function Signup() {
                 <hr></hr>
                 <div className="text-center text-sm text-muted-foreground">
                     Have an account?{" "}
-                    <Link href="#" className="font-medium underline underline-offset-4" prefetch={false}>
+                    <Link href="/Signin" className="font-medium underline underline-offset-4" prefetch={false}>
                         LOGIN
                     </Link>
                 </div>
