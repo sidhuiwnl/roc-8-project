@@ -1,5 +1,6 @@
 
 import { z } from "zod";
+import 'server-only'
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
