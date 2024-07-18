@@ -1,12 +1,15 @@
-"use client";
+'use client'
 
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+
 import { api } from "~/trpc/react";
 import { useState } from "react";
+import Cookies from 'js-cookie';
+import { useRouter } from "next/navigation";
+
 
 export default function Signin() {
   const router = useRouter();
@@ -29,7 +32,10 @@ export default function Signin() {
     e.preventDefault();
     await loginedName.refetch().then((result) => {
       if (result.data) {
-        router.push("/");
+        // Set cookies
+        Cookies.set('userId', result.data.id, { expires: 7 });
+        Cookies.set('username', result.data.name, { expires: 7 });
+        router.push('/')
       } else if (result.error) {
         setPassword("");
         setEmail("");
@@ -37,6 +43,8 @@ export default function Signin() {
       }
     });
   }
+
+ 
 
   return (
     <div className="flex h-screen w-full items-center justify-center bg-background">

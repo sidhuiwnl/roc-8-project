@@ -19,9 +19,17 @@ model Signup{
     password    String 
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
-
+    items       Items[]
     
 }
+
+model Items{
+    id       String  @id @default(uuid())
+    name     String
+    userId   String
+    user      Signup  @relation(fields: [userId],references: [id])  
+}
+
 
 
 

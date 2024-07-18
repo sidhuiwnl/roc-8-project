@@ -6,8 +6,10 @@ import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import { useState } from "react";
 import { api } from "~/trpc/react";
+import {useRouter} from "next/navigation"
 
 export default function Signup() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,15 +17,16 @@ export default function Signup() {
 
   const signupForm = api.signup.create.useMutation({
     onSuccess: async () => {
-      alert("submitted");
-      setEmail("");
-      setName("");
-
-      setPassword("");
+      router.push(`/?userId=${signupForm.data?.id}&username=${signupForm.data?.name}`)
+      
     },
 
     onError: (error) => {
+      setEmail("");
+      setName("");
+      setPassword("");
       throw new Error(error.message);
+      
     },
   });
 

@@ -2,8 +2,16 @@
 import Link from "next/link"
 import { Button } from "~/components/ui/button"
 import {SearchIcon,ChevronLeft, ChevronRight, ShoppingCartIcon } from 'lucide-react'
+import { cookies } from "next/headers"
+
+
 
 export default function Header() {
+
+  const CookieStore = cookies();
+  const userID = CookieStore.get('userId')?.value;
+  const name = CookieStore.get('username')?.value;
+
   return (
     <>
     <header className="bg-background border-b border-muted/40 px-4 py-5 md:px-6">
@@ -38,7 +46,7 @@ export default function Header() {
               Orders & Returns
             </Link>
             <span className="mx-2">|</span>
-            <span>Hi, John</span>
+            <span>{name && userID ? `Hi,${name}` : `Hi,John`}</span>
           </div>
           <div>
           <Button variant="ghost" size="icon">
