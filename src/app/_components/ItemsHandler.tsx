@@ -69,49 +69,48 @@ export default function ItemsHandler({ userId }: { userId: string }) {
             ))}
           </div>
 
-          <div className="flex justify-center items-center space-x-2">
+          <div className="flex justify-center items-center space-x-4">
             <button
               onClick={() => goToPage(1)}
               disabled={currentPage === 1}
-              
-              className="p-1 bg-gray-200 rounded disabled:opacity-50"
+              className="text-gray-600 disabled:text-gray-300"
             >
               <ChevronsLeft size={20} />
             </button>
             <button
               onClick={() => goToPage(currentPage - 1)}
               disabled={currentPage === 1}
-              className="p-1 bg-gray-200 rounded disabled:opacity-50"
+              className="text-gray-600 disabled:text-gray-300"
             >
               <ChevronLeft size={20} />
             </button>
             {getPageNumbers().map((pageNumber) => (
-              <button
+              <span
                 key={pageNumber}
                 onClick={() => goToPage(pageNumber)}
-                className={`px-3 py-1 rounded ${
+                className={`cursor-pointer ${
                   currentPage === pageNumber
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200"
+                    ? "text-blue-500 font-bold"
+                    : "text-gray-600"
                 }`}
               >
                 {pageNumber}
-              </button>
+              </span>
             ))}
             {totalPages > getPageNumbers()[getPageNumbers().length - 1]! && (
-              <span>...</span>
+              <span className="text-gray-600">...</span>
             )}
             <button
               onClick={() => goToPage(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="p-1 bg-gray-200 rounded disabled:opacity-50"
+              className="text-gray-600 disabled:text-gray-300"
             >
               <ChevronRight size={20} />
             </button>
             <button
               onClick={() => goToPage(totalPages)}
               disabled={currentPage === totalPages}
-              className="p-1 bg-gray-200 rounded disabled:opacity-50"
+              className="text-gray-600 disabled:text-gray-300"
             >
               <ChevronsRight size={20} />
             </button>
