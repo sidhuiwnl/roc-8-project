@@ -15,7 +15,7 @@ export default function ItemsHandler({ userId }: { userId: string }) {
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  const totalPages = Math.ceil((products?.length || 0) / itemsPerPage);
+  const totalPages = Math.ceil((products?.length ?? 0) / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentProducts = products?.slice(startIndex, endIndex);
@@ -97,7 +97,7 @@ export default function ItemsHandler({ userId }: { userId: string }) {
                 {pageNumber}
               </span>
             ))}
-            {totalPages > getPageNumbers()[getPageNumbers().length - 1]! && (
+            {totalPages > getPageNumbers()[getPageNumbers().length - 1] && (
               <span className="text-gray-600">...</span>
             )}
             <button
