@@ -49,13 +49,14 @@ export default function Header() {
             <span>{name && userID ? `Hi,${name}` : `Hi,John`}</span>
           </div>
           <div>
-          <Button variant="ghost" size="icon">
-            <ShoppingCartIcon className="h-5 w-5" />
-            <span className="sr-only">Cart</span>
-          </Button>
+          
           <Button variant="ghost" size="icon" >
             <SearchIcon className="h-5 w-5" />
             <span className="sr-only">Search</span>
+          </Button>
+          <Button variant="ghost" size="icon">
+            <ShoppingCartIcon className="h-5 w-5" />
+            <span className="sr-only">Cart</span>
           </Button>
           </div>
           
