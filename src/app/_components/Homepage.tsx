@@ -1,47 +1,62 @@
-'use client'
+"use client";
+import Link from "next/link";
+import { useEffect, useRef } from "react";
+import { api } from "~/trpc/react";
 
-import Link from "next/link"
-import { useEffect } from "react";
-import { api } from "~/trpc/react"
+import ItemsHandler from "./ItemsHandler"; // Assuming you have this component
 
-
-interface HomeClientProps{
-    name?: string,
-    userId? : string 
+interface HomeClientProps {
+  name?: string;
+  userId?: string;
 }
 
+export default function Homepage({ name, userId }: HomeClientProps) {
+  const mutationCalledRef = useRef(false);
+  
+  const onUser = api.items.addItems.useMutation({
+    onSuccess: async(data) => {
+      alert("successfully added");
+      console.log("Mutation succeeded");
 
+      if (userId) {
+        localStorage.setItem(`userVisited_${userId}`, "true");
+      }
+      
+      
+    },
+    onError: (error) => {
+      console.error("Error adding items:", error);
+    },
+  });
 
-export default function Homepage({name,userId} : HomeClientProps){
-    const onUser = api.items.addItems.useMutation({
-        onSuccess: (data) => {
-            alert('succesfully added')
-          },
-          onError: (error) => {
-            console.error("Error adding items:", error);
-          }
-    });
-    
-    useEffect(() =>{
-        if(userId){
-            onUser.mutate({userId})
-        }else{
-            console.error("Invalid userId:", userId);
-        }
-    },[userId])
+  useEffect(() => {
+    if (userId && !mutationCalledRef.current) {
+      const hasVisited = localStorage.getItem(`userVisited_${userId}`);
 
-    return(
+      if (!hasVisited) {
+        onUser.mutate({ userId });
+        mutationCalledRef.current = true;
+      }
+    } else if (!userId) {
+      console.error("Invalid userId:", userId);
+    }
+  }, [userId, onUser]);
+
+  return (
+    <>
+      {name && userId ? (
         <>
-        {name && userId ? (
-            <h1>Welcome {name}</h1>
-            
-        ) : (
-            <div>
-                <h1>Please login</h1>
-                <Link href="/Signin">Login</Link>
-            </div>
-            
-        )}
+          
+         
+            <ItemsHandler userId={userId}/>
+          
         </>
-    )
+      ) : (
+        <div>
+          <h1>Please login</h1>
+          <Link href="/Signin">Login</Link>
+        </div>
+      )}
+    </>
+  );
 }

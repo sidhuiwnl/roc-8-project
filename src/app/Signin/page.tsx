@@ -7,7 +7,7 @@ import Link from "next/link";
 
 import { api } from "~/trpc/react";
 import { useState } from "react";
-import Cookies from 'js-cookie';
+
 import { useRouter } from "next/navigation";
 
 
@@ -33,8 +33,7 @@ export default function Signin() {
     await loginedName.refetch().then((result) => {
       if (result.data) {
         // Set cookies
-        Cookies.set('userId', result.data.id, { expires: 7 });
-        Cookies.set('username', result.data.name, { expires: 7 });
+        
         router.push('/')
       } else if (result.error) {
         setPassword("");

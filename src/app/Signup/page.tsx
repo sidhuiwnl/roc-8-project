@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { api } from "~/trpc/react";
 import {useRouter} from "next/navigation"
+import Cookies from 'js-cookie';
+
 
 export default function Signup() {
   const router = useRouter();
@@ -16,8 +18,10 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
 
   const signupForm = api.signup.create.useMutation({
-    onSuccess: async () => {
-      router.push(`/?userId=${signupForm.data?.id}&username=${signupForm.data?.name}`)
+    onSuccess: async (data) => {
+      Cookies.set('userId', data.id!, { expires: 7 });
+      Cookies.set('username', data.name, { expires: 7 });
+      router.push(`/`)
       
     },
 
@@ -33,6 +37,7 @@ export default function Signup() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     signupForm.mutate({ name, email, password });
+    
   };
 
   return (

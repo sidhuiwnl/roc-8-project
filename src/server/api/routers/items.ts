@@ -2,6 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 import { faker } from '@faker-js/faker';
+import { db } from "~/server/db";
 
 
 
@@ -29,6 +30,23 @@ export const itemsRouter = createTRPCRouter({
             })
         )})
         return {success : true,createdProducts}
+    }),
+    
+    getItems : publicProcedure
+    .input(z.object({userId : z.string()}))
+    .query(async(opts) =>{
+        const { input } = opts;
+        const products = await db.items.findMany({
+           where : {
+            userId : input.userId,
+           }, 
+           select :{
+            name : true,
+            id : true
+           }
+        })
+
+        return products
     })
 
    
