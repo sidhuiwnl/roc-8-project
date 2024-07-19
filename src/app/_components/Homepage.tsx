@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { api } from "~/trpc/react";
 
-import ItemsHandler from "./ItemsHandler"; // Assuming you have this component
+import ItemsHandler from "./ItemsHandler"; 
 
 interface HomeClientProps {
   name?: string;
@@ -14,7 +14,7 @@ export default function Homepage({ name, userId }: HomeClientProps) {
   const mutationCalledRef = useRef(false);
   
   const onUser = api.items.addItems.useMutation({
-    onSuccess: async(data) => {
+    onSuccess: async() => {
       alert("successfully added");
       console.log("Mutation succeeded");
 

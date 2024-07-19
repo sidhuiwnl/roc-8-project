@@ -19,7 +19,7 @@ export default function Signup() {
 
   const signupForm = api.signup.create.useMutation({
     onSuccess: async (data) => {
-      Cookies.set('userId', data.id!, { expires: 7 });
+      Cookies.set('userId', data.id, { expires: 7 });
       Cookies.set('username', data.name, { expires: 7 });
       router.push(`/`)
       
@@ -88,7 +88,7 @@ export default function Signup() {
             </div>
           </div>
 
-          {/* ... existing form fields ... */}
+          
           <Button
             type="submit"
             className="mx-auto w-full"
