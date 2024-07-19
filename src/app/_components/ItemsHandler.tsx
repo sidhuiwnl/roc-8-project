@@ -98,7 +98,7 @@ export default function ItemsHandler({ userId }: { userId: string }) {
                 {pageNumber}
               </button>
             ))}
-            {totalPages > getPageNumbers()[getPageNumbers().length - 1] && (
+            {totalPages > getPageNumbers()[getPageNumbers().length - 1]! && (
               <span>...</span>
             )}
             <button
