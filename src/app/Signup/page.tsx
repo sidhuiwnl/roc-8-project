@@ -17,8 +17,20 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const onUser = api.items.addItems.useMutation({
+    onSuccess: () => {
+      console.log("Items added successfully");
+    },
+    onError: (error) => {
+      console.error("Error adding items:", error);
+    }
+  })
+  
+
   const signupForm = api.signup.create.useMutation({
+    
     onSuccess: async (data) => {
+      onUser.mutate({ userId: data.id });
       Cookies.set('userId', data.id, { expires: 7 });
       Cookies.set('username', data.name, { expires: 7 });
       router.push(`/`)
@@ -37,6 +49,8 @@ export default function Signup() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     signupForm.mutate({ name, email, password });
+
+    
     
   };
 
