@@ -1,16 +1,33 @@
 
+'use client'
+
 import Link from "next/link"
 import { Button } from "~/components/ui/button"
 import {SearchIcon,ChevronLeft, ChevronRight, ShoppingCartIcon } from 'lucide-react'
-import { cookies } from "next/headers"
-
+import { useEffect,useState } from "react"
+import { usePathname } from "next/navigation"
 
 
 export default function Header() {
+  const pathname = usePathname();
+  const[username,setUsername] = useState("");
+  const[userId,setUserId] = useState("");
 
-  const CookieStore = cookies();
-  const userID = CookieStore.get('userId')?.value;
-  const name = CookieStore.get('username')?.value;
+  useEffect(() =>{
+    if(pathname === '/'){
+      const cookieUserId = document.cookie.split('; ').find(row => row.startsWith('userId='))?.split('=')[1]
+      const cookieUsername = document.cookie.split('; ').find(row => row.startsWith('username='))?.split('=')[1]
+
+      if(cookieUsername){
+        setUsername(decodeURIComponent(cookieUsername))
+      }
+
+      
+      setUserId(cookieUserId || '');
+
+
+    }
+  },[pathname])
 
   return (
     <>
@@ -46,7 +63,7 @@ export default function Header() {
               Orders & Returns
             </Link>
             <span className="mx-2">|</span>
-            <span>{name && userID ? `Hi,${name}` : `Hi,John`}</span>
+            <span>{username && userId ? `Hi,${username}` : `Hi,John`}</span>
           </div>
           <div>
           

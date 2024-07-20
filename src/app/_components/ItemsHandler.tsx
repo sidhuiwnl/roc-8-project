@@ -12,7 +12,9 @@ export default function ItemsHandler({ userId }: { userId: string }) {
     error,
   } = api.items.getItems.useQuery({ userId });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <div className="flex items-center justify-center h-screen">
+  <p className="text-2xl">Loading...</p>    
+  </div>;
   if (error) return <p>Error: {error.message}</p>;
 
   const totalPages = Math.ceil((products?.length ?? 0) / itemsPerPage);
