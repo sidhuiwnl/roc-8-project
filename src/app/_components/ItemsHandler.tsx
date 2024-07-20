@@ -44,7 +44,7 @@ export default function ItemsHandler({ userId }: { userId: string }) {
   return (
     <>
       <div className="flex h-screen w-full items-center justify-center bg-background">
-        <div className="mx-4 w-full max-w-md space-y-12 rounded-xl border bg-card p-6 sm:px-8">
+        <div className="mx-4 w-full max-w-md space-y-12 rounded-xl border-2 bg-card p-6 sm:px-8">
           <div className="space-y-4 text-center">
             <h2 className="mt-5 text-2xl font-bold">
               Please mark your interests!
