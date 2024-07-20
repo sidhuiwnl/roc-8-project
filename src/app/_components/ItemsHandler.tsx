@@ -28,7 +28,7 @@ export default function ItemsHandler({ userId }: { userId: string }) {
     const pageNumbers = [];
     const totalPageButtonsToShow = 5;
     let startPage = Math.max(1, currentPage - 2);
-    let endPage = Math.min(totalPages, startPage + totalPageButtonsToShow - 1);
+    const endPage = Math.min(totalPages, startPage + totalPageButtonsToShow - 1);
 
     if (endPage - startPage + 1 < totalPageButtonsToShow) {
       startPage = Math.max(1, endPage - totalPageButtonsToShow + 1);
