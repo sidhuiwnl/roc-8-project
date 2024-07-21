@@ -23,7 +23,7 @@ export default function Header() {
       }
 
       
-      setUserId(cookieUserId || '');
+      setUserId(cookieUserId ?? '');
 
 
     }
